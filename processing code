@@ -1,0 +1,119 @@
+/* Author: Chandana Kashyap
+   email ID: chanda1997@gmail.com, chandana.kashyap@cca.edu
+   
+   Description: Planets of our solar system revolving around the sun
+*/
+
+//color palettes
+color planets[] = {#EAD88C, #C15810, #876E07, #0A6993, #AA0E0E, #A35D23, #DD981D, #60A2EA, #0A8487};
+color orbits = #545354;
+
+// planet info images
+PImage BG;
+PImage merInfo;
+PImage venInfo;
+PImage earInfo;
+PImage marInfo;
+PImage jupInfo;
+PImage satInfo;
+PImage uraInfo;
+PImage nepInfo;
+PImage sunInfo;
+
+//Coordinates of the planet
+float planetX[] = {0, 0, 0, 0, 0, 0, 0, 0};
+float planetY[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+//Coordinates x, y
+float x[] = {480, 420, 510, 530, 560, 580, 590, 600};
+float y[] = {480, 420, 510, 530, 560, 580, 590, 600};
+
+//Orbit sizes
+float orbit[]= {200, 280, 360, 440, 520, 600, 680, 760};
+
+//Planet sizes
+float planetSize[]={28, 35, 35, 30, 65, 60, 50, 44};
+float angle[] = {0, PI/6, PI/2, 3*PI/12, PI, 5*PI/4, 3*PI/2, 7*PI/4};
+
+
+//setup
+void setup() {
+  size(1000,800);
+  //loadBGimage
+  BG = loadImage("bg4.png");
+  
+  //load planet info images
+  merInfo = loadImage("solarsystem_Mercury.png");
+  venInfo = loadImage("solarsystem_Venus.png");
+  earInfo = loadImage("solarsystem_Earth.png");
+  marInfo = loadImage("solarsystem_Mars.png");
+  jupInfo = loadImage("solarsystem_Jupiter.png");
+  satInfo = loadImage("solarsystem_Saturn.png");
+  uraInfo = loadImage("solarsystem_Uranus.png");
+  nepInfo = loadImage("solarsystem_Neptune.png");
+ 
+}
+
+void draw() {
+ 
+ image(BG,0,0);
+ fill(planets[0]);
+ //draw the sun
+ strokeWeight(0);
+ circle(420,420,80);
+ strokeWeight(0);
+ 
+ 
+ for (int i = 0; i<8; i++)
+ {
+ stroke(orbits);
+ strokeWeight(1);
+ noFill();
+ circle(420,420,orbit[i]);
+ }
+ 
+ 
+  for (int j = 0; j<8; j++)
+  {
+    planetX[j] = 420 + cos(angle[j])*(orbit[j]/2);
+    planetY[j] = 420 + sin(angle[j])*(orbit[j]/2);
+    fill(planets[j+1]);
+    circle(planetX[j], planetY[j], planetSize[j]);
+    angle[j] = angle[j]+0.001;
+  }
+  
+  if(hoverPlanet(0,0,200)){
+  image(merInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,300)){
+  image(venInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,400)){
+  image(earInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,500)){
+  image(marInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,600)){
+  image(jupInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,700)){
+  image(satInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,740)){
+  image(uraInfo, 750, 30);
+  }
+  else if(hoverPlanet(0,0,780)){
+  image(nepInfo, 750, 30);
+  }
+}
+
+boolean hoverPlanet(float x, float y, float planet)
+{
+ if (dist(mouseX - 420, mouseY - 420, x, y) < (planet/2)) {
+   return true;
+ }
+ else{
+ return false;
+ }
+}
